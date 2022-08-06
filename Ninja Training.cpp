@@ -39,6 +39,8 @@ int helperToFindMemo(int day, vector<vector<int>> &points, int lastDay, vector<v
 	return dp[day][lastDay] = maxi;
 }
 
+
+
 int helperToFindTabulation(int n, vector<vector<int>> &points) {
 	vector<vector<int>>dp(n, vector<int> (4, 0));//dp[day][last]
 	//whatever the base cases fix them in the dp array
@@ -65,13 +67,43 @@ int helperToFindTabulation(int n, vector<vector<int>> &points) {
 }
 
 
+//space optimisation
+int mostOptimalResult(int n, vector<vector<int>> &points) {
+	vector<int > prev(4); //dp[day][last]
+	//whatever the base cases fix them in the dp array
+	prev[0] = max(points[0][1], points[0][2]);
+	prev[1] = max(points[0][0], points[0][2]);
+	prev[2] = max(points[0][0], points[0][1]);
+	prev[3] = max({points[0][0], points[0][1], points[0][2]});
+
+//now if we fix the base case then in total there will be loop from 1- n-1
+	for (int day = 1; day < n; day++) {
+//for the 4 possible cases i.e., last day task
+		vector<int> temp(4);
+		for (int last = 0; last < 4; last++) {
+			temp[last] = 0;
+//for the 3 tasks out of which we have to choose
+			for (int task = 0; task < 3; task++) {
+				if (task != last) {
+					int pointAcheive = points[day][task] + prev[task];
+					temp[last] = max(temp[last], pointAcheive);
+				}
+			}
+		}
+		prev = temp;//placing
+	}
+	return prev[3];
+}
+
+
 
 int ninjaTraining(int n, vector<vector<int>> &points)
 {
 	// int ans =  helperToFind(n - 1, points, 3);//for recursion
 	vector<vector<int>>dp(n, vector<int> (4, -1));
 	// int ans = helperToFindMemo(n - 1, points, 3, dp);//for memoisation
-	int ans = helperToFindTabulation(n, points);
+	// int ans = helperToFindTabulation(n, points);
+	int ans = mostOptimalResult(n, points);
 	return ans;
 }
 
