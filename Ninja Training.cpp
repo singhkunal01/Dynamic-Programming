@@ -2,10 +2,9 @@
 using namespace std;
 
 //recursive code for the problem -Ninjas Training
-
-int helperToFind(int idx, vector<vector<int>> &points, int lastDay) {
+int helperToFind(int day, vector<vector<int>> &points, int lastDay) {
 //base case
-	if (idx == 0) {
+	if (day == 0) {
 		int maxi = 0 ;
 		for (int i = 0; i < 3; i++)if (i != lastDay)maxi =  max(maxi, points[0][i]);
 		return maxi;
@@ -13,7 +12,7 @@ int helperToFind(int idx, vector<vector<int>> &points, int lastDay) {
 	int maxi = 0;
 	for (int i = 0; i < 3; i++) {
 		if (i != lastDay) {
-			int activity = points[idx][i] + helperToFind(idx - 1 , points, i);
+			int activity = points[day][i] + helperToFind(day - 1 , points, i);
 			maxi = max(maxi, activity);
 		}
 	}
@@ -22,30 +21,57 @@ int helperToFind(int idx, vector<vector<int>> &points, int lastDay) {
 
 
 //memoisation code
-int helperToFindMemo(int idx, vector<vector<int>> &points, int lastDay, vector<vector<int>> &dp) {
+int helperToFindMemo(int day, vector<vector<int>> &points, int lastDay, vector<vector<int>> &dp) {
 //base case
-	if (dp[idx][lastDay] != -1) return dp[idx][lastDay];
-	if (idx == 0) {
+	if (dp[day][lastDay] != -1) return dp[day][lastDay];
+	if (day == 0) {
 		int maxi = 0 ;
 		for (int i = 0; i < 3; i++)if (i != lastDay)maxi =  max(maxi, points[0][i]);
-		return dp[idx][lastDay] = maxi;
+		return dp[day][lastDay] = maxi;
 	}
 	int maxi = 0;
-	for (int i = 0; i < 3; i++) {
-		if (i != lastDay) {
-			int activity = points[idx][i] + helperToFindMemo(idx - 1 , points, i, dp);
-			maxi = max(maxi, activity);
+	for (int task = 0; task < 3; task++) {
+		if (task != lastDay) {
+			int pointAcheive = points[day][task] + helperToFindMemo(day - 1 , points, task, dp);//here this i becomes the last task that was done
+			maxi = max(maxi, pointAcheive);
 		}
 	}
-	return dp[idx][lastDay] = maxi;
+	return dp[day][lastDay] = maxi;
 }
+
+int helperToFindTabulation(int n, vector<vector<int>> &points) {
+	vector<vector<int>>dp(n, vector<int> (4, 0));//dp[day][last]
+	//whatever the base cases fix them in the dp array
+	dp[0][0] = max(points[0][1], points[0][2]);
+	dp[0][1] = max(points[0][0], points[0][2]);
+	dp[0][2] = max(points[0][0], points[0][1]);
+	dp[0][3] = max({points[0][0], points[0][1], points[0][2]});
+
+//now if we fix the base case then in total there will be loop from 1- n-1
+	for (int day = 1; day < n; day++) {
+//for the 4 possible cases i.e., last day task
+		for (int last = 0; last < 4; last++) {
+			dp[day][last] = 0;
+//for the 3 tasks out of which we have to choose
+			for (int task = 0; task < 3; task++) {
+				if (task != last) {
+					int pointAcheive = points[day][task] + dp[day - 1][task];
+					dp[day][last] = max(dp[day][last], pointAcheive);
+				}
+			}
+		}
+	}
+	return dp[n - 1][3];
+}
+
 
 
 int ninjaTraining(int n, vector<vector<int>> &points)
 {
-	int ans =  helperToFind(n - 1, points, 3);
+	// int ans =  helperToFind(n - 1, points, 3);//for recursion
 	vector<vector<int>>dp(n, vector<int> (4, -1));
-	ans = helperToFindMemo(n - 1, points, 3, dp);
+	// int ans = helperToFindMemo(n - 1, points, 3, dp);//for memoisation
+	int ans = helperToFindTabulation(n, points);
 	return ans;
 }
 
