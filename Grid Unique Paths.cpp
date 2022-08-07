@@ -42,6 +42,29 @@ int givePathsTabu(int m, int n) {
 	return dp[m - 1][n - 1];
 }
 
+/*Space optimisation -  TC - O(M*N) and SC - O(N)*/
+int givePathsMostOptimal(int m, int n) {
+	vector<int > prev(n);
+	for (int i = 0 ; i < m; i++) {
+		vector<int> temp(n);//basically this is the current row having n columns
+		for (int j = 0; j < n; j++) {
+			if (i == 0 and j == 0)temp[j] = 1;
+			else {
+				int up = 0, left = 0;
+				if (j > 0)
+					left = temp[j - 1];
+				if (i > 0)
+					up = prev[j];
+				temp[j] = up + left;
+			}
+		}
+		prev = temp;
+	}
+	return prev[n - 1];
+}
+
+
+
 
 int uniquePaths(int m, int n) {
 	// vector<vector<int>> dp(m, vector<int>(n, -1));
@@ -52,7 +75,10 @@ int uniquePaths(int m, int n) {
 	// int ans = givePathsMemo(m - 1, n - 1, dp);
 
 	//tabulation approach
-	int ans = givePathsTabu(m, n);
+	// int ans = givePathsTabu(m, n);
+
+	int ans = givePathsMostOptimal(m, n);
+
 	return ans;
 }
 
