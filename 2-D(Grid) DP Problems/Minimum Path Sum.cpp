@@ -18,16 +18,18 @@ int findMinumumSumUsingMemoisation(int i, int j , vector<vector<int>> &grid, vec
 
 
 /*Tabulation approach TC = O(M*N) and SC = O(M*N)*/
-int findMinumumSumUsingTabulation(int n, int m, vector<vector<int>> &grid, vector<vector<int>> &dp) {
+int findMinumumSumUsingTabulation(vector<vector<int>> &grid, vector<vector<int>> &dp) {
+	int n = grid.size(), m = grid[0].size();
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < m; j++) {
 			//base case
 			if (i == 0 and j == 0) dp[i][j] = grid[i][j];
 			else {
-				int up = grid[i][j], left = grid[i][j];
+				int up = grid[i][j];
 				if (i > 0)up += dp[i - 1][j];
 				else up += 1e9;//remember these key points as memoisation these are the base case where if we
 				// go out of bound then for ignoring that sum upto that point we add the larger value in the upward
+				int left = grid[i][j];
 				if (j > 0)left += dp[i][ j - 1];
 				else left += 1e9;//remember these key points as memoisation these are the base case where if we
 				// go out of bound then for ignoring that sum upto that point we add the larger value in the leftward
@@ -45,7 +47,7 @@ int minPathSum(vector<vector<int>>& grid) {
 	// int ans = findMinumumSumUsingMemoisation(n - 1, m - 1, grid, dp);
 
 //for tabulation
-	int ans = findMinumumSumUsingTabulation(n, m, grid, dp);
+	int ans = findMinumumSumUsingTabulation(grid, dp);
 	return ans;
 
 }
