@@ -27,11 +27,11 @@ int findMinumumSumUsingTabulation(vector<vector<int>> &grid, vector<vector<int>>
 			else {
 				int up = grid[i][j];
 				if (i > 0)up += dp[i - 1][j];
-				else up += 1e9;//remember these key points as memoisation these are the base case where if we
+				else up += INF;//remember these key points as memoisation these are the base case where if we
 				// go out of bound then for ignoring that sum upto that point we add the larger value in the upward
 				int left = grid[i][j];
 				if (j > 0)left += dp[i][ j - 1];
-				else left += 1e9;//remember these key points as memoisation these are the base case where if we
+				else left += INF;//remember these key points as memoisation these are the base case where if we
 				// go out of bound then for ignoring that sum upto that point we add the larger value in the leftward
 				dp[i][j] = min(up, left);
 			}
@@ -40,6 +40,33 @@ int findMinumumSumUsingTabulation(vector<vector<int>> &grid, vector<vector<int>>
 	return dp[n - 1][m - 1];
 }
 
+
+int mostOptimalMinPathSum(vector<vector<int>> &grid) {
+	int n = grid.size(), m = grid[0].size();
+	vector<int> prev(m);
+	for (int i = 0; i < n; i++) {
+		vector<int> curr(m);
+		for (int j = 0; j < m; j++) {
+			//base case
+			if (i == 0 and j == 0) curr[j] = grid[i][j];
+			else {
+				int up = grid[i][j];
+				if (i > 0)up += prev[j];
+				else up += INF;//remember these key points as memoisation these are the base case where if we
+				// go out of bound then for ignoring that sum upto that point we add the larger value in the upward
+				int left = grid[i][j];
+				if (j > 0)left += curr[ j - 1];
+				else left += INF;//remember these key points as memoisation these are the base case where if we
+				// go out of bound then for ignoring that sum upto that point we add the larger value in the leftward
+				curr[j] = min(up, left);
+			}
+		}
+		prev = curr;
+	}
+	return prev[m - 1];
+}
+
+
 int minPathSum(vector<vector<int>>& grid) {
 	int n = grid.size(), m = grid[0].size();
 	vector<vector<int>> dp(n, vector<int> (m, -1));
@@ -47,7 +74,9 @@ int minPathSum(vector<vector<int>>& grid) {
 	// int ans = findMinumumSumUsingMemoisation(n - 1, m - 1, grid, dp);
 
 //for tabulation
-	int ans = findMinumumSumUsingTabulation(grid, dp);
+	// int ans = findMinumumSumUsingTabulation(grid, dp);
+//for most optimal
+	int ans = mostOptimalMinPathSum(grid);
 	return ans;
 
 }
