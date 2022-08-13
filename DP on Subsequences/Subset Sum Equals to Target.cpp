@@ -67,9 +67,9 @@ bool checkForTheValidSubsetSpaceOptimise(int n, int target, vector<int> &arr) {
 bool subsetSumToK(int n, int target, vector<int> &arr) {
 	vector<vector<int>> dp(n + 1, vector<int> (target + 1, -1));
 	// int ans = checkForTheValidSubset(n - 1, target, arr);
-	// int ans = checkForTheValidSubsetMemo(n - 1, target, arr, dp);
+	int ans = checkForTheValidSubsetMemo(n - 1, target, arr, dp);
 	// int ans = checkForTheValidSubsetTabul(n, target, arr);
-	int ans = checkForTheValidSubsetSpaceOptimise(n, target, arr);
+	// int ans = checkForTheValidSubsetSpaceOptimise(n, target, arr);
 	return ans;
 }
 
