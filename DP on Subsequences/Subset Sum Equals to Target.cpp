@@ -29,7 +29,7 @@ bool checkForTheValidSubsetTabul(int n, int target, vector<int> &arr) {
 	//for the first base case considering target as 0
 	for (int i = 0 ; i < n; i++) dp[i][0] = true;
 //for the second base considering the index as 0
-	dp[0][arr[0]] = true;
+	if (arr[0] <= target) dp[0][arr[0]] = true;
 //for rest stuff
 	for (int index = 1; index < n; index++) {
 		for (int givenTarget = 1; givenTarget <= target ; givenTarget++) {
