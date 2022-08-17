@@ -51,6 +51,24 @@ int giveMaxWeightSpaceOpt(vector<int> &weight, vector<int> &value, int n, int &m
 	return prev[maxWeight];
 }
 
+/*...................Most optimal approach using single array optimisation...................*/
+int mostOptimalResultant(vector<int> &weight, vector<int> &value, int n, int &maxWeight) {
+	// Write your code here
+	vector<int> prev(maxWeight + 1);
+	for (int currHouse = weight[0]; currHouse <= maxWeight; currHouse++)prev[currHouse] = value[0];
+	for (int currHouse = 1; currHouse < n; currHouse++) {
+		for (int fromWeight = maxWeight; fromWeight >= 0; fromWeight--) {
+			int notPick = prev[fromWeight];
+			int pick = INT_MIN;
+			if (weight[currHouse] <= fromWeight)
+				pick = value[currHouse] + prev[fromWeight - weight[currHouse]];
+			prev[fromWeight] = max(pick, notPick);
+		}
+	}
+	return prev[maxWeight];
+}
+
+
 
 //main knapsack function
 int knapsack(vector<int> &weight, vector<int> &value, int n, int &maxWeight) {
@@ -61,7 +79,9 @@ int knapsack(vector<int> &weight, vector<int> &value, int n, int &maxWeight) {
 	//tabulation
 	// int maxCost = giveMaxWeightTabu(weight, value, n, maxWeight);
 	//space optimisation
-	int maxCost = giveMaxWeightSpaceOpt(weight, value, n, maxWeight);
+	// int maxCost = giveMaxWeightSpaceOpt(weight, value, n, maxWeight);
+	//most optimal result
+	int maxCost = mostOptimalResultant(weight, value, n, maxWeight);
 	return maxCost;
 }
 
