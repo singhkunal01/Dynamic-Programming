@@ -1,77 +1,83 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int findWays(int ind, int target, vector<int> &num, vector<vector<int>> &dp) {
-//if we are on the 0th index then if the target is the multiple of the current denomination then only we can pick it
+int findWays(int ind, int amount, vector<int> &coins, vector<vector<int>> &dp) {
+//if we are on the 0th index then if the amount is the multiple of the current denomination then only we can pick it
 	if (ind == 0) {
-		if (target % num[ind] == 0) return target / num[0];
+		if (amount % coins[ind] == 0) return amount / coins[0];
 		else return 1e9;
 	}
-	if (dp[ind][target] != -1)return dp[ind][target];
+	/*instead of the upper base case we can also use these two bases cases :
 
-	int notTake = findWays(ind - 1, target, num, dp);
+	if(amount == 0) return 0;
+	if(ind < 0 || amount < 0) return 1e9;
+
+	*/
+	if (dp[ind][amount] != -1)return dp[ind][amount];
+
+	int notTake = findWays(ind - 1, amount, coins, dp);
 	int take = 1e9;
-	if (num[ind] <= target) take = 1 + findWays(ind, target - num[ind], num, dp);
-	return dp[ind][target] = min(take, notTake);
+	if (coins[ind] <= amount) take = 1 + findWays(ind, amount - coins[ind], coins, dp);
+	return dp[ind][amount] = min(take, notTake);
 }
 
-int findWaysTabul(vector<int> &num, int target) {
-	int n = num.size();
-	vector<vector<int>> dp(n, vector<int>(target + 1, 1e8));
-	for (int ind = 0; ind <= target; ind++)if (ind % num[0] == 0) dp[0][ind] = ind / num[0];
+int findWaysTabul(vector<int> &coins, int amount) {
+	int n = coins.size();
+	vector<vector<int>> dp(n, vector<int>(amount + 1, 1e8));
+	for (int ind = 0; ind <= amount; ind++)if (ind % coins[0] == 0) dp[0][ind] = ind / coins[0];
 	for (int ind = 1; ind < n; ind++) {
-		for (int tempTarget = 0; tempTarget <= target; tempTarget++) {
-			int notTake = dp[ind - 1][tempTarget];
+		for (int tempAmount = 0; tempAmount <= amount; tempAmount++) {
+			int notTake = dp[ind - 1][tempAmount];
 			int take = 1e8;
-			if (num[ind] <= tempTarget) take = 1 + dp[ind][tempTarget - num[ind]];
-			dp[ind][tempTarget] = min(take, notTake);
+			if (coins[ind] <= tempAmount) take = 1 + dp[ind][tempAmount - coins[ind]];
+			dp[ind][tempAmount] = min(take, notTake);
 		}
 	}
-	int ans = dp[n - 1][target];
+	int ans = dp[n - 1][amount];
 	return ans < 1e8 ? ans : -1;
 }
 
 
 // space optimisation approach using 1d Dp
-int findWaysSpaceOpt(vector<int> &num, int target) {
-	int n = num.size();
-	vector<int> prev(target + 1, 1e9), curr(target + 1, 1e9);
-	for (int ind = 0; ind <= target; ind++)if (ind % num[0] == 0) prev[ind] = ind / num[0];
+int findWaysSpaceOpt(vector<int> &coins, int amount) {
+	int n = coins.size();
+	vector<int> prev(amount + 1, 1e9), curr(amount + 1, 1e9);
+	for (int ind = 0; ind <= amount; ind++)if (ind % coins[0] == 0) prev[ind] = ind / coins[0];
 	for (int ind = 1; ind < n; ind++) {
-		for (int tempTarget = 0; tempTarget <= target; tempTarget++) {
-			int notTake = prev[tempTarget];
+		for (int tempAmount = 0; tempAmount <= amount; tempAmount++) {
+			int notTake = prev[tempAmount];
 			int take = 1e9;
-			if (num[ind] <= tempTarget) take = 1 + curr[tempTarget - num[ind]];
-			curr[tempTarget] = min(take, notTake);
+			if (coins[ind] <= tempAmount) take = 1 + curr[tempAmount - coins[ind]];
+			curr[tempAmount] = min(take, notTake);
 		}
 		prev = curr;
 	}
-	int ans = prev[target];
+	int ans = prev[amount];
 	return ans < 1e9 ? ans : -1;
 }
 
 
-int minimumElements(vector<int> &num, int target)
+int minimumElements(vector<int> &coins, int amount)
 {
 	// write your code here
-	int n = num.size();
-	// vector<vector<int>> dp(n, vector<int>(target + 1, -1));
+	int n = coins.size();
+	// vector<vector<int>> dp(n, vector<int>(amount + 1, -1));
 	//for memoisation + recursion
-	// int ans = findWays(n - 1, target, num, dp);
+	// int ans = findWays(n - 1, amount, coins, dp);
 	//for tabulation
-	int ans = findWaysTabul(num, target);
+	int ans = findWaysTabul(coins, amount);
 	//space optimised
-	// int ans = findWaysSpaceOpt(num, target);
+	// int ans = findWaysSpaceOpt(coins, amount);
 	return ans < 1e9 ? ans : -1;
 }
 
 int main() {
 	int n;
 	cin >> n;
-	int target; cin >> target;
-	vector<int> num(n);
-	for (int &i : num)cin >> i;
-	cout << minimumElements(num, target);
+	int amount; cin >> amount;
+	vector<int> coins(n);
+	for (int &i : coins)cin >> i;
+	cout << minimumElements(coins, amount);
 	return 0;
 
 }
