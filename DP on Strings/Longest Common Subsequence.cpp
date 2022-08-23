@@ -51,7 +51,7 @@ int lcsTabul(string str1, string str2) {
 }
 
 
-/*tabulation approach for the same */
+/*space optimiation approach for the same */
 int lcsSpaceOpt(string str1, string str2) {
 	int n = str1.size(), m = str2.size();
 	vector<int> prev(m + 1), curr (m + 1);
