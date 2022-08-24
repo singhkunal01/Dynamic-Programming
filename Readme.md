@@ -17,4 +17,3 @@
 
 <p align="center">&lt; / &gt; with ❤️ by <a href="https://github.com/singhkunal01">Kunal Singh</a></p>
 
-theme: cayman
