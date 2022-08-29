@@ -84,6 +84,40 @@ bool wildcardMatchTabul(string &pattern, string&text) {
 	return dp[n][m];
 }
 
+//space optimisation approach
+/*tabulation code - */
+bool wildcardMatchSpaceOpt(string &pattern, string&text) {
+	int n = pattern.size(), m = text.size();
+	vector<bool> prev(m + 1), curr(m + 1);
+//base cases comparing with memoisation code
+//1. base case
+	prev[0] = curr[0] = true;
+//2.base case
+	for (int j = 1; j <= m; j++) prev[j] = false;
+//3. base case , is in the first loop
+//main logic
+
+	for (int i = 1; i <= n; i++) {
+
+		//everytime columns first element assigned to be false
+		bool flag = true;
+		for (int k = 1; k <= i; k++) {
+			if (pattern[k - 1] != '*') {flag = false; break;};
+		}
+		curr[0] = flag;
+
+		for (int j = 1; j <= m; j++) {
+			if (pattern[i - 1] == text[j - 1] or pattern[i - 1] == '?')
+				curr[j] = prev[j - 1];
+			else if (pattern[i - 1] == '*')
+				curr[j] = prev[j] | curr[j - 1];
+			else curr[j] = false;
+		}
+		prev = curr;
+	}
+	return prev[m];
+}
+
 
 bool isMatch(string &pattern, string &text) {
 	int n = pattern.size(), m = text.size();
@@ -93,11 +127,12 @@ bool isMatch(string &pattern, string &text) {
 	// bool res = wildcardMatch(n - 1, m - 1, pattern, text, dp);
 	//for shifting of indices
 	vector<vector<int>> dp(n + 1, vector<int>(m + 1, -1));
-	bool res = wildcardMatchShifting(n, m, pattern, text, dp);
+	// bool res = wildcardMatchShifting(n, m, pattern, text, dp);
 
 //for tabulation
-	cout << wildcardMatchTabul(pattern, text);
-
+	// bool res = wildcardMatchTabul(pattern, text);
+//for space optimistion
+	bool res = wildcardMatchSpaceOpt(pattern, text);
 	return res;
 }
 
