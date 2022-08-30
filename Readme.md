@@ -1,7 +1,7 @@
-# DP Beginner to Advanced 😌
+# [DP Beginner to Advanced](https://github.com/singhkunal01/Dynamic-Programming) 👨🏻‍💻
 
 - It contains all the codes which i coded during the learning of Dynamic Programming With All Possible Approaches Like -
-> Recusion \
+> Recursion \
 > Memoization \
 > Tabulation \
 > Space Optimisation (Wherever Needed)
@@ -16,3 +16,7 @@
 
 
 <p align="center">&lt; / &gt; with ❤️ by <a href="https://github.com/singhkunal01">Kunal Singh</a></p>
+
+```diff
+@@ Star This Repository if You Like the codes & Explanation 🌟@@
+ ```
