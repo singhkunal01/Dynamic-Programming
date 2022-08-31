@@ -19,7 +19,6 @@ int main() {
 	for (int &pricePerDay : prices) cin >> pricePerDay;
 	cout << maxProfit(prices);
 	return 0;
-
 }
 
-//singhkunal01
+//singhkunal01bu
