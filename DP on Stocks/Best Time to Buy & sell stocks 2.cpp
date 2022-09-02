@@ -51,13 +51,45 @@ int findMaxProfitTabul(vector<int> &profit) {
 }
 
 
-int maxProfit(vector<int> &prices) {
-	int n = prices.size();
+//space optimisation approach using 1d array
+
+int findMaxProfitSpaceOpt(vector<int> &profit) {
+	int n = profit.size();
+	vector<int> prev (2), curr(2);//prev is the next column because we are moving from last to first
+	prev[0] = prev[1] = 0;
+
+//bottom up because in memoization we start from the  0 so here we do invert
+	for (int i = n - 1; i >= 0; i--) {
+		for (int buy  = 0; buy <= 1; buy++) {
+			long long prof = 0;
+			if (buy) {
+				prof = max(-profit[i] + prev[0], prev[1]);
+			}
+			else {
+				prof = max(profit[i] + prev[1], prev[0]);
+
+			}
+			curr[buy] = prof;
+		}
+		prev = curr;
+	}
+	return prev[1];
+
+}
+
+int maxProfit(vector<int> &profit) {
+	int n = profit.size();
 	//for recursion
-	// int res =  findMaxProfit(0, n, prices, true, 0);
+	// int res =  findMaxProfit(0, n, profit, true, 0);
 	//for memoization
 	vector<vector<int>> dp(n, vector<int> (2, -1));
-	int res = findMaxProfitMemo(0, n, prices, true, 0, dp);
+	// int res = findMaxProfitMemo(0, n, profit, true, 0, dp);
+
+	//for tabulation
+	// int res = findMaxProfitTabul(profit);
+
+	//for space optimisation
+	int res = findMaxProfitSpaceOpt(profit);
 
 	return res;
 
@@ -66,9 +98,9 @@ int maxProfit(vector<int> &prices) {
 int main() {
 	int n;
 	cin >> n;
-	vector<int> prices(n);
-	for (int &i : prices) cin >> i;
-	cout << maxProfit(prices);
+	vector<int> profit(n);
+	for (int &i : profit) cin >> i;
+	cout << maxProfit(profit);
 	return 0;
 
 }
