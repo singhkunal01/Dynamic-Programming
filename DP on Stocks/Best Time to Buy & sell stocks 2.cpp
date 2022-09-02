@@ -77,6 +77,23 @@ int findMaxProfitSpaceOpt(vector<int> &profit) {
 
 }
 
+//  Use variables instead of these 2 arrays
+int findMaxProfitUsingVariables(vector<int> &profit) {
+	int n = profit.size();
+	long long currNotBuy , currBuy, prevNotBuy , prevBuy;
+	prevBuy = prevNotBuy = 0;
+
+//bottom up because in memoization we start from the  0 so here we do invert
+	for (int i = n - 1; i >= 0; i--) {
+		currBuy = max(-profit[i] + prevNotBuy, prevBuy);
+		currNotBuy = max(profit[i] + prevBuy, prevNotBuy);
+		prevBuy = currBuy;
+		prevNotBuy = currNotBuy;
+	}
+	return prevBuy;
+
+}
+
 int maxProfit(vector<int> &profit) {
 	int n = profit.size();
 	//for recursion
@@ -89,7 +106,10 @@ int maxProfit(vector<int> &profit) {
 	// int res = findMaxProfitTabul(profit);
 
 	//for space optimisation
-	int res = findMaxProfitSpaceOpt(profit);
+	// int res = findMaxProfitSpaceOpt(profit);
+
+	//for most optimal solution - using variables
+	int res = findMaxProfitUsingVariables(profit);
 
 	return res;
 
