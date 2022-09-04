@@ -83,7 +83,7 @@ int findMaxProfitUsingVariables(vector<int> &profit) {
 	long long currNotBuy , currBuy, prevNotBuy , prevBuy;
 	prevBuy = prevNotBuy = 0;
 
-//bottom up because in memoization we start from the  0 so here we do invert
+//bottom up because in memoization we start from the  0 so here we do inve rt
 	for (int i = n - 1; i >= 0; i--) {
 		currBuy = max(-profit[i] + prevNotBuy, prevBuy);
 		currNotBuy = max(profit[i] + prevBuy, prevNotBuy);
@@ -97,7 +97,7 @@ int findMaxProfitUsingVariables(vector<int> &profit) {
 int maxProfit(vector<int> &profit) {
 	int n = profit.size();
 	//for recursion
-	// int res =  findMaxProfit(0, n, profit, true, 0);
+	// int res =  findMaxProfit(0, n, profit, 1, 0);
 	//for memoization
 	vector<vector<int>> dp(n, vector<int> (2, -1));
 	// int res = findMaxProfitMemo(0, n, profit, true, 0, dp);
