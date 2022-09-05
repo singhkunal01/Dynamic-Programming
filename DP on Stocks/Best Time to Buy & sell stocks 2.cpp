@@ -124,3 +124,9 @@ int main() {
 	return 0;
 
 }
+
+/*Note :
+- We can omit the inner buy loop because whenever the buy is 1 then only that buy function called else the sell
+function called so by removing it just place the buy[0] for the buy and buy[1] for the sell.
+
+*/
