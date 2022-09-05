@@ -23,6 +23,7 @@ int findMaxProfitMemo(int i, int n, vector<int> &profit, int buy, int prof, vect
 		prof = max(-profit[i] + findMaxProfitMemo(i + 1, n, profit, 0, prof, dp), findMaxProfitMemo(i + 1, n, profit, 1, prof, dp));
 	else
 		prof = max(profit[i] + findMaxProfitMemo(i + 1, n, profit, 1, prof, dp), findMaxProfitMemo(i + 1, n, profit, 0, prof, dp));
+
 	return dp[i][buy] = prof;
 }
 
@@ -100,7 +101,7 @@ int maxProfit(vector<int> &profit) {
 	// int res =  findMaxProfit(0, n, profit, 1, 0);
 	//for memoization
 	vector<vector<int>> dp(n, vector<int> (2, -1));
-	// int res = findMaxProfitMemo(0, n, profit, true, 0, dp);
+	int res = findMaxProfitMemo(0, n, profit, true, 0, dp);
 
 	//for tabulation
 	// int res = findMaxProfitTabul(profit);
@@ -109,7 +110,7 @@ int maxProfit(vector<int> &profit) {
 	// int res = findMaxProfitSpaceOpt(profit);
 
 	//for most optimal solution - using variables
-	int res = findMaxProfitUsingVariables(profit);
+	// int res = findMaxProfitUsingVariables(profit);
 
 	return res;
 

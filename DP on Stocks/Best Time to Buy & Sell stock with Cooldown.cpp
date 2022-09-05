@@ -28,6 +28,7 @@ int findMaxProfitCooldownTabul(vector<int> &profit) {
 	for (int i = n - 1; i >= 0; i--) {
 		dp[i][1] = max(-profit[i] + dp[i + 1][0], dp[i + 1][1]);
 		dp[i][0] = max(profit[i] + dp[i + 2][1], dp[i + 1][0]);
+		cout << dp[i][1] << ", " << dp[i][1] << endl;
 	}
 	return dp[0][1];
 }
@@ -60,10 +61,10 @@ int maxProfit(vector<int> &profit) {
 	// int res = findMaxProfitCooldown(0, n, profit, 1, 0, dp);
 
 	//for tabulation
-	// int res = findMaxProfitCooldownTabul(profit);
+	int res = findMaxProfitCooldownTabul(profit);
 
 //for space optimisation
-	int res = findMaxProfitCooldownSpaceOpt(profit);
+	// int res = findMaxProfitCooldownSpaceOpt(profit);
 	return res;
 
 }
