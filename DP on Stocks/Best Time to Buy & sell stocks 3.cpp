@@ -70,19 +70,57 @@ int findMaxProfitSpaceOptIII(vector<int> &profit) {
 
 /*-------------Most optimal approach with all three methods - Memoization ,Tabulation and Space optimization-------------*/
 
-int giveMaxProfit(int i, int n, vector<int> &profit, int transactions , vector<vector<int>> &dp) {
+int giveMaxProfitIII(int i, int n, vector<int> &profit, int transactions , vector<vector<int>> &dp) {
 	if (i == n or transactions == 4) return 0;
 	if (dp[i][transactions] != -1) return dp[i][transactions];
 	if (transactions % 2 == 0) {//even means we have can buy
-		dp[i][transactions] = max(-profit[i] + giveMaxProfit(i + 1, n, profit, transactions + 1, dp),
-		                          giveMaxProfit(i + 1, n, profit, transactions, dp));
+		dp[i][transactions] = max(-profit[i] + giveMaxProfitIII(i + 1, n, profit, transactions + 1, dp),
+		                          giveMaxProfitIII(i + 1, n, profit, transactions, dp));
 
 	}
 	else {
-		dp[i][transactions] = max(profit[i] + giveMaxProfit(i + 1, n, profit, transactions + 1, dp),
-		                          giveMaxProfit(i + 1, n, profit, transactions, dp));
+		dp[i][transactions] = max(profit[i] + giveMaxProfitIII(i + 1, n, profit, transactions + 1, dp),
+		                          giveMaxProfitIII(i + 1, n, profit, transactions, dp));
 	}
 	return dp[i][transactions];
+}
+
+
+// for tabulation
+int giveMaxProfitIIITabul(vector<int> &profit) {
+	int n = profit.size();
+	vector<vector<int>> dp(n + 1, vector<int>(5, 0));
+	//no need to check for base cases because already the values are 0
+	for (int i = n - 1; i >= 0; i--) {
+		for (int trans = 0; trans < 4; trans++) {
+			if (trans % 2 == 0) {//even means we have can buy
+				dp[i][trans] = max(-profit[i] + dp[i + 1][trans + 1], dp[i + 1][trans]);
+			}
+			else {
+				dp[i][trans] = max(profit[i] + dp[i + 1][trans + 1], dp[i + 1][trans]);
+			}
+		}
+	}
+	return dp[0][0];
+}
+
+//space optimisation for above approach
+int giveMaxProfitIIISpaceOpt(vector<int> &profit) {
+	int n = profit.size();
+	vector<int> prev (5, 0), curr(5, 0);
+	//no need to check for base cases because already the values are 0
+	for (int i = n - 1; i >= 0; i--) {
+		for (int trans = 0; trans < 4; trans++) {
+			if (trans % 2 == 0) {//even means we have can buy
+				curr[trans] = max(-profit[i] + prev[trans + 1], prev[trans]);
+			}
+			else {
+				curr[trans] = max(profit[i] + prev[trans + 1], prev[trans]);
+			}
+		}
+		prev = curr;
+	}
+	return prev[0];
 }
 
 
@@ -120,8 +158,11 @@ int maxProfit(vector<int> &profit) {
 
 	*/
 	//for memoization
-	int res = giveMaxProfit(0, n, profit, 0, dp);
-
+	// int res = giveMaxProfitIII(0, n, profit, 0, dp);
+	//for tabulation
+	// int res = giveMaxProfitIIITabul(profit);
+	//for space optimisation
+	int res = giveMaxProfitIIISpaceOpt(profit);
 	return res;
 
 }
