@@ -48,6 +48,7 @@ vector<int> printLIS(vector<int> &nums) {
 //index of index in the hash array
 	vector<int> lis(maxLength);
 	lis[maxLength - 1] = nums[lastIdx]; //this is the last value of the LIS(i.e., greatest one)
+	if (maxLength < 2) return lis;
 	for (int i = maxLength - 2; i >= 0; i--) {
 		lis[i] = nums[track[lastIdx]];
 		lastIdx = track[lastIdx];
