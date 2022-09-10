@@ -39,7 +39,6 @@ int matrixChainMultiplication(vector<int>&arr) {
 	//for memoization
 	vector<vector<int>> dp(n, vector<int>(n, -1));
 	int res = calculateOperationsMemo(1, n - 1, arr, dp);
-
 	return res;
 }
 
