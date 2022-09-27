@@ -3,7 +3,7 @@ using namespace std;
 
 const int mod = 1e9 + 7;
 
-/*memoisationc code*/
+/*memoisation code*/
 
 long long findWays(int i, int j, int isTrue, string &exp, vector<vector<vector<long long>>>&dp) {
 //base cases

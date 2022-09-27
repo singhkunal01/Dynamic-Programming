@@ -1,7 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-/*This code is valid only for the Codestudio one problem not for the leetcode one because leetcode one has negatives also*/
+/*This code is valid only for the Codestudio one problem not
+for the leetcode one because leetcode one has negatives also*/
 
 //most optimal approach
 int minSubsetSumDifference(vector<int>& arr, int n)
