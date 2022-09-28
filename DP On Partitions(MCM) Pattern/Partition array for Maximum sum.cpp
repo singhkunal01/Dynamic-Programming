@@ -12,19 +12,36 @@ int doPartitions(int ind, vector<int> &arr, int k, vector<int> &dp) {
 	for (int j = ind; j < min(n, ind + k); j++) {
 		maxi = max(maxi, arr[j]);
 		int cost = (lenOfSubarr++ * maxi) + doPartitions(j + 1, arr, k, dp);
-		cout << cost << " ";
 		maxValue = max(cost, maxValue);
 	}
 	return dp[ind] = maxValue;
 }
 
+//Tabulation approach
+int doPartitionsTabul(vector<int> &arr, int k) {
+	int n = arr.size();
+	vector<int> dp(n + 1, 0);
+	for (int ind = n - 1; ind >= 0; ind--) {
+		int lenOfSubarr = 1, maxValue = INT_MIN, maxi = INT_MIN/*for storing the max value for each subarray*/;
+		for (int j = ind; j < min(n, ind + k); j++) {
+			maxi = max(maxi, arr[j]);
+			int cost = (lenOfSubarr++ * maxi) + dp[j + 1];
+			maxValue = max(cost, maxValue);
+		}
+		dp[ind] =  maxValue;
+	}
+	return dp[0];
+}
 
 //main problem function
 int maxSumAfterPartitioning(vector<int>& arr, int k) {
 	int n = arr.size();
 //memoisation code
-	vector<int> dp(n, -1);
-	int res = doPartitions(0, arr, k, dp);
+	// vector<int> dp(n, -1);
+	// int res = doPartitions(0, arr, k, dp);
+
+//tabulation code
+	int res  = doPartitionsTabul(arr, k);
 	return res;
 }
 
