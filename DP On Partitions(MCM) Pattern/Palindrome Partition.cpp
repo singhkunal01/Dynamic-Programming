@@ -32,7 +32,7 @@ int doPartitions(int ind, string &s, vector<int>&dp) {
 // tabulation code
 int doPartitionsTabul(string &s) {
 	int n = s.size();
-	vector<int> dp(n + 1 , 0);
+	vector<int> dp(n + 1 , 0);//why n+1 because the base case in memo is i==n so for that we have to add dp[n]=0 so take +1 size
 	for (int ind = n - 1; ind >= 0; ind--) {
 		int minCost = INT_MAX;
 		string substr;
