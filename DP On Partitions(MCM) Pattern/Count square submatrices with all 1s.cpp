@@ -11,7 +11,7 @@ int numSubmat(vector<vector<int>>& mat) {
 	for (int i = 1; i < n; i++) {
 		for (int j = 1; j < m; j++) {
 			if (mat[i][j] == 0) dp[i][j] = 0;
-			else dp[i][j] = max({dp[i][j - 1], dp[i - 1][j - 1], dp[i - 1][j]}) + 1;
+			else dp[i][j] = 1 + min({dp[i][j - 1], dp[i - 1][j - 1], dp[i - 1][j]});
 		}
 	}
 //find the total submatrices
@@ -28,6 +28,10 @@ int numSubmat(vector<vector<int>>& mat) {
 int main() {
 	int n, m; cin >> n >> m;
 	vector<vector<int>> grid(n, vector<int> (m));
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++)
+			cin >> grid[i][j];
+	}
 	cout << numSubmat(grid);
 	return 0;
 
