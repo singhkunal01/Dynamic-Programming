@@ -31,7 +31,25 @@ int findPathSumTabul(vector<vector<int>> &triangle) {
 	return dp[0][0];
 }
 
+// space optimisation approach
+int findPathSumSpaceOpt(vector<vector<int>> &triangle) {
+	int n = triangle.size();
+	vector<int> prev(n), curr(n);
 
+	//base case
+	for (int j = 0; j < n; j++) prev[j] = triangle[n - 1][j];
+
+//rest of the code
+	for (int i = n - 2; i >= 0; i--) {
+		for (int j = i; j >= 0; j--) {
+			int cur = triangle[i][j] + prev[j];
+			int next = triangle[i][j] + prev[j + 1];
+			curr[j] = min(cur, next);
+		}
+		prev = curr;
+	}
+	return prev[0];
+}
 
 int minimumTotal(vector<vector<int>>& triangle) {
 	int n = triangle.size();
@@ -40,7 +58,11 @@ int minimumTotal(vector<vector<int>>& triangle) {
 	// int res = findPathSum(0, 0, triangle, n, dp);
 
 	//for tabulation approach
-	int res = findPathSumTabul(triangle);
+	// int res = findPathSumTabul(triangle);
+
+	//for space optimisation approach
+	int res = findPathSumSpaceOpt(triangle);
+
 	return res;
 }
 
