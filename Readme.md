@@ -17,7 +17,7 @@
 |  **2D - DP On Partitions(MCM) Pattern** |   [Matrix Chain Multiplication Memoization](https://bit.ly/3fELMF6) |  [Matrix Chain Multiplication Tabulation](https://bit.ly/3Rt1Bw8) | [Minimum cost to cut the Stick](https://bit.ly/3dXWK8t)  | [Burst Balloons](https://bit.ly/3LZ01ke) | [Boolean Evaluation](https://bit.ly/3y9Jqo9) |  [Palindrome Partition](https://bit.ly/3C1TAbF) |  [Partition array for Maximum sum](https://bit.ly/3rp2Vp9) |  [Maximum rectangle area with all 1s](https://bit.ly/3RoAlic) |[Count square submatrices with all 1s](https://bit.ly/3dUcbyA) |  - |  - | 
 | **3D - DP on Grid** | (Jump Pattern) [Cherry Pickup](https://bit.ly/3dMhEXz) | (On stocks) [Best Time to Buy & sell stocks 2](https://bit.ly/3RGyc1J) | (On stocks) [Best Time to Buy & sell stocks 3](https://bit.ly/3TJumGX) |- | - | - |  - |  - |  - |  - |  - | 
 
-<p align="center">&lt; / &gt; with ❤️ by <a href="https://github.com/singhkunal01">Kunal Singh</a></p>
+<p align="center">&lt; / &gt; with ❤️ by <a href="https://github.com/singhkunal01/Dynamic-Programming">Kunal Singh</a></p>
 
 ```diff
 @@ Star This Repository if You Like the codes & Explanation 🌟@@
