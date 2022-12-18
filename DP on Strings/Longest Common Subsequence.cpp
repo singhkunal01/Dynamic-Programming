@@ -92,7 +92,6 @@ int longestCommonSubsequence(string str1, string str2) {
 }
 
 int main() {
-// #if
 	string str1, str2;
 	cin >> str1 >> str2;
 	cout << longestCommonSubsequence(str1, str2);
